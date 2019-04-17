@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def calc_generation_per_unit(country_code, start, psr_type=None, periods=365):
-	client = EntsoePandasClient(api_key="f92c4029-439b-4e67-ab0d-0906353966eb")
-
-
+	client = EntsoePandasClient(api_key=MyToken)
 
 	ts = pd.DataFrame()
 
@@ -19,7 +17,8 @@ def calc_generation_per_unit(country_code, start, psr_type=None, periods=365):
 	return ts
 
 def calc_generation_per_country(country_code, start, psr_type=None,periods=365):
-	client = EntsoePandasClient(api_key="f92c4029-439b-4e67-ab0d-0906353966eb")
+	client = EntsoePandasClient(api_key=MyToken)
+	
 	ts_country = pd.DataFrame()
 
 	for day in pd.date_range(start, periods=periods):
@@ -39,9 +38,7 @@ ts = calc_generation_per_unit(country_code, start, psr_type,periods)
 
 ts_country = calc_generation_per_country(country_code, start, psr_type,periods)
 
-print(ts_country)
 ts_sum = pd.DataFrame(ts.sum(axis=1),columns=['Fossil Hard coal'])
-print(ts_sum)
 plt.plot(ts_country-ts_sum)
 plt.title('Country - aggregated power plants-'+str(country_code)+'-'+str(psr_type))
 plt.xlabel('hour of year')
